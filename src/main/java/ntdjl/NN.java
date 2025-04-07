@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.ejml.simple.SimpleMatrix;
 
-import ntdjl.utils.ActivationFunction;
-
 public class NN {
 	ArrayList<Layer> layers;
 	
@@ -25,15 +23,10 @@ public class NN {
 		layers.remove(layer);
 	}
 	
-	public SimpleMatrix feed_forward(SimpleMatrix input, ActivationFunction activ) {
+	public SimpleMatrix feed_forward(SimpleMatrix input) {
 		SimpleMatrix output = input;
 	    for (Layer layer : layers) {
 	        output = layer.forward(output);
-	        
-	        switch(activ) {
-	        case SIGMOID:
-	        	output =  MathAreGoods.sigmoid(output);
-	        }
 	    }
 	    
 	    return output;

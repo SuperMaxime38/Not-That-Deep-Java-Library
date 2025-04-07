@@ -11,9 +11,9 @@ public class MainTest {
 		
 		NN model = new NN();
 		
-		model.addLayer(new Layer(n[0], n[1]));
-		model.addLayer(new Layer(n[1], n[2]));
-		model.addLayer(new Layer(n[2], n[3]));
+		model.addLayer(new Layer(n[0], n[1], ActivationFunction.SIGMOID));
+		model.addLayer(new Layer(n[1], n[2], ActivationFunction.SIGMOID));
+		model.addLayer(new Layer(n[2], n[3], ActivationFunction.SIGMOID));
 		
 		
 		double[][] x = {
@@ -50,7 +50,7 @@ public class MainTest {
 		
 		Y.reshape(n[3], m);
 		
-		SimpleMatrix output = model.feed_forward(A0, ActivationFunction.SIGMOID);
+		SimpleMatrix output = model.feed_forward(A0);
 		System.out.println("Output: " + output.toString());
 	}
 }
