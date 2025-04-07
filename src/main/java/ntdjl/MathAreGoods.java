@@ -21,7 +21,7 @@ public class MathAreGoods {
 	    return SimpleMatrix.wrap(resultData);
 	}
 	
-	public SimpleMatrix calculateLayerValue(SimpleMatrix W, SimpleMatrix A_prev, SimpleMatrix b) {
+	public static SimpleMatrix calculateLayerValue(SimpleMatrix W, SimpleMatrix A_prev, SimpleMatrix b) {
 	    SimpleMatrix Z = W.mult(A_prev);
 
 	    int numRows = Z.getNumRows();
