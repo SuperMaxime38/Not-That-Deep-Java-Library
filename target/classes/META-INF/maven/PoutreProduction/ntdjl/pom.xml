@@ -1,0 +1,16 @@
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>PoutreProduction</groupId>
+  <artifactId>ntdjl</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Not That Deep Java Library</name>
+  <description>Well DJL not seems to work so I create my own...</description>
+  <dependencies>
+  	<dependency>
+	  <groupId>org.ejml</groupId>
+	  <artifactId>ejml-all</artifactId>
+	  <version>0.44.0</version>
+	</dependency>
+  </dependencies>
+</project>
