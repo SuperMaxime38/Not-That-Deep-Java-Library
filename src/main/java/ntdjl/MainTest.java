@@ -1,13 +1,16 @@
 package ntdjl;
 
+import java.util.ArrayList;
+
 import org.ejml.simple.SimpleMatrix;
 
 import ntdjl.utils.ActivationFunction;
+import ntdjl.utils.Pair;
 
 public class MainTest {
 	
 	public static void main(String[] args) {
-		int[] n = {2, 3, 3, 1};
+		int[] n = {2, 100, 50, 1};
 		
 		NN model = new NN();
 		
@@ -50,10 +53,37 @@ public class MainTest {
 		
 		Y.reshape(n[3], m);
 		
-		SimpleMatrix output = model.feed_forward(A0);
-		System.out.println("Output: " + output.toString());
+		model.train(A0, Y, 1000, 0.1);
 		
-		double cost = model.cost(output, Y);
-		System.out.println("cost: " + cost);
+		Pair out = model.feed_forward(A0);
+		System.out.println("Final res: " + out.getA());
+		
+		
+		
+//		int epochs = 10; // training for 1000 iterations
+//		double alpha = 0.1; // set learning rate to 0.1
+//		ArrayList<Double> costs = new ArrayList<Double>(); // list to store costs
+//		
+//		for(int e= 0; e<epochs; e++) {
+//			Pair forward = model.feed_forward(A0);
+//			SimpleMatrix output = (SimpleMatrix) forward.getA();
+//			@SuppressWarnings("unchecked")
+//			ArrayList<SimpleMatrix> layers_outputs = (ArrayList<SimpleMatrix>) forward.getB();
+//			
+//			double error = model.cost(output, Y);
+//			costs.add(error);
+//			
+//			
+//		}
+		
+//		Pair forward = model.feed_forward(A0);
+//		SimpleMatrix output = (SimpleMatrix) forward.getA();
+//		@SuppressWarnings("unchecked")
+//		ArrayList<SimpleMatrix> layers_outputs = (ArrayList<SimpleMatrix>) forward.getB();
+//		
+//		System.out.println("Output: " + output.toString());
+//		
+//		double cost = model.cost(output, Y);
+//		System.out.println("cost: " + cost);
 	}
 }

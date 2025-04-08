@@ -12,25 +12,15 @@ public class Layer {
 	SimpleMatrix bias;
 	ActivationFunction activ;
 	
+	// Pour stocker temporairement l’entrée (z) et la sortie (a)
+    public SimpleMatrix lastZ, lastA;
+	
 	public Layer(int inputSize, int outputSize, ActivationFunction fn) {
 		Random rand = new Random();
         weights = SimpleMatrix.random_DDRM(outputSize, inputSize, -1.0, 1.0, rand);
         bias = SimpleMatrix.random_DDRM(outputSize, 1, -1.0, 1.0, rand);
 		this.activ = fn;
-		
-		System.out.println("weights:\n" + weights);
-		System.out.println("bias:\n" + bias);
 	}
-	
-//	public SimpleMatrix forward(SimpleMatrix input) {
-//		SimpleMatrix output = MathAreGoods.calculateLayerValue(this.weights, input, this.bias);
-//		switch(this.activ) {
-//		case SIGMOID:
-//			output = MathAreGoods.sigmoid(output);
-//			//System.out.println("called sigmoid");
-//		}
-//		return output;
-//	}
 	
 	public SimpleMatrix forward(SimpleMatrix input) {
 	    SimpleMatrix z = weights.mult(input);
@@ -43,12 +33,25 @@ public class Layer {
 
 	    z = z.plus(biasMatrix);
 
-	    return MathAreGoods.sigmoid2(z);
+	    this.lastZ = z;
+        this.lastA = MathsAreGood.sigmoid(z);
+        return this.lastA;
 	}
 	
-	public void backprop() {
-		
-	}
+	// Applique la rétropropagation sur ce layer
+    public SimpleMatrix backward(SimpleMatrix dA, SimpleMatrix A_prev, double learningRate) {
+        SimpleMatrix dZ = dA.elementMult(MathsAreGood.sigmoidDerivative(this.lastA));
+        SimpleMatrix dW = dZ.mult(A_prev.transpose()).divide(A_prev.getNumCols());
+        SimpleMatrix dB = MathsAreGood.meanRows(dZ);
+        SimpleMatrix dA_prev = weights.transpose().mult(dZ);
+
+        // Met à jour les poids
+        weights = weights.minus(dW.scale(learningRate));
+        bias = bias.minus(dB.scale(learningRate));
+
+        return dA_prev;
+    }
+	
 	
 	public SimpleMatrix getWeights() {
 		return this.weights;
