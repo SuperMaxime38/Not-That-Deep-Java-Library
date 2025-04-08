@@ -52,5 +52,8 @@ public class MainTest {
 		
 		SimpleMatrix output = model.feed_forward(A0);
 		System.out.println("Output: " + output.toString());
+		
+		double cost = model.cost(output, Y);
+		System.out.println("cost: " + cost);
 	}
 }
