@@ -70,12 +70,9 @@ public class NN {
 	        // Forward pass
 	        Pair result = this.feed_forward(A0);
 	        SimpleMatrix yHat = (SimpleMatrix) result.getA();
-//	        @SuppressWarnings("unchecked")
-//	        ArrayList<SimpleMatrix> activations = (ArrayList<SimpleMatrix>) result.getB();
 
 	        // Calcul du coût
 	        double loss = this.cost(yHat, Y);
-	        //System.out.println("Époque " + epoch + " | Coût: " + loss);
 
 	        // Backpropagation (gère aussi la mise à jour des poids)
 	        this.backpropagate(A0, Y, learningRate);
@@ -84,5 +81,26 @@ public class NN {
 	            System.out.println("Époque " + epoch + " | Coût: " + loss);
 	        }
 	    }
+	}
+	
+	public SimpleMatrix predict(SimpleMatrix input) {
+	    Pair result = this.feed_forward(input);
+	    return (SimpleMatrix) result.getA(); // La sortie finale (yHat)
+	}
+	
+	public int predictClass(SimpleMatrix input) {
+	    SimpleMatrix output = this.predict(input);
+	    
+	    int maxIndex = 0;
+	    double maxValue = output.get(0);
+
+	    for (int i = 1; i < output.getNumElements(); i++) {
+	        if (output.get(i) > maxValue) {
+	            maxValue = output.get(i);
+	            maxIndex = i;
+	        }
+	    }
+
+	    return maxIndex;
 	}
 }

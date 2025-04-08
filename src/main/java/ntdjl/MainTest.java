@@ -1,7 +1,5 @@
 package ntdjl;
 
-import java.util.ArrayList;
-
 import org.ejml.simple.SimpleMatrix;
 
 import ntdjl.utils.ActivationFunction;
@@ -32,6 +30,21 @@ public class MainTest {
 			{130, 69}
 		};
 		
+		
+		//Random test don't mind
+//		DataHolder holder = new DataHolder();
+//		Random rdm = new Random();
+//		for(int i = 0; i < 10; i++) {
+//			ArrayList<Double> ls = new ArrayList<Double>();
+//			ls.add((double) rdm.nextInt(100, 200));
+//			ls.add((double) rdm.nextInt(60, 80));
+//			holder.addData(ls);
+//		}
+//		
+//		SimpleMatrix A0 = holder.convertToMatrix();
+		
+		// So the previous code piece might be used in my plugin in order to collect datas from environment
+		
 		SimpleMatrix A0 = new SimpleMatrix(x);
 		A0 = A0.transpose();
 
@@ -55,35 +68,15 @@ public class MainTest {
 		
 		model.train(A0, Y, 1000, 0.1);
 		
-		Pair out = model.feed_forward(A0);
+		double[][] test = {
+				{235, 69}
+		};
+		
+		SimpleMatrix testMat = new SimpleMatrix(test);
+		testMat = testMat.transpose();
+		
+		Pair out = model.feed_forward(testMat);
 		System.out.println("Final res: " + out.getA());
 		
-		
-		
-//		int epochs = 10; // training for 1000 iterations
-//		double alpha = 0.1; // set learning rate to 0.1
-//		ArrayList<Double> costs = new ArrayList<Double>(); // list to store costs
-//		
-//		for(int e= 0; e<epochs; e++) {
-//			Pair forward = model.feed_forward(A0);
-//			SimpleMatrix output = (SimpleMatrix) forward.getA();
-//			@SuppressWarnings("unchecked")
-//			ArrayList<SimpleMatrix> layers_outputs = (ArrayList<SimpleMatrix>) forward.getB();
-//			
-//			double error = model.cost(output, Y);
-//			costs.add(error);
-//			
-//			
-//		}
-		
-//		Pair forward = model.feed_forward(A0);
-//		SimpleMatrix output = (SimpleMatrix) forward.getA();
-//		@SuppressWarnings("unchecked")
-//		ArrayList<SimpleMatrix> layers_outputs = (ArrayList<SimpleMatrix>) forward.getB();
-//		
-//		System.out.println("Output: " + output.toString());
-//		
-//		double cost = model.cost(output, Y);
-//		System.out.println("cost: " + cost);
 	}
 }
