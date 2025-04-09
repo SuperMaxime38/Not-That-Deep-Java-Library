@@ -8,7 +8,7 @@ import ntdjl.utils.Pair;
 public class MainTest {
 	
 	public static void main(String[] args) {
-		int[] n = {2, 100, 50, 1};
+		int[] n = {2, 600, 100, 1};
 		
 		NN model = new NN();
 		

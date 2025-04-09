@@ -2,5 +2,6 @@ package ntdjl.utils;
 
 public enum ActivationFunction {
 	
-	SIGMOID
+	SIGMOID,
+	ALWAYS_ACTIVE
 }

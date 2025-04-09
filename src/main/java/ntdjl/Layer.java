@@ -34,7 +34,9 @@ public class Layer {
 	    z = z.plus(biasMatrix);
 
 	    this.lastZ = z;
-        this.lastA = MathsAreGood.sigmoid(z);
+	    
+	    applyActivationFunction();
+	    
         return this.lastA;
 	}
 	
@@ -51,6 +53,17 @@ public class Layer {
 
         return dA_prev;
     }
+    
+    public void applyActivationFunction() {
+		switch (this.activ) {
+		case SIGMOID:
+			this.lastA = MathsAreGood.sigmoid(this.lastZ);
+			break;
+		default:
+			this.lastA = this.lastZ;
+			break; // DEFAULT IS ALWAYS_ACTIVE
+		}
+	}
 	
 	
 	public SimpleMatrix getWeights() {
