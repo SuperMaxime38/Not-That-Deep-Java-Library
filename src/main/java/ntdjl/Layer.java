@@ -59,6 +59,15 @@ public class Layer {
 		case SIGMOID:
 			this.lastA = MathsAreGood.sigmoid(this.lastZ);
 			break;
+		case RELU:
+			this.lastA = MathsAreGood.relu(this.lastZ);
+			break;
+		case GELU:
+			this.lastA = MathsAreGood.gelu(this.lastZ);
+			break;
+		case ELU:
+			this.lastA = MathsAreGood.elu(this.lastZ);
+			break;
 		default:
 			this.lastA = this.lastZ;
 			break; // DEFAULT IS ALWAYS_ACTIVE
