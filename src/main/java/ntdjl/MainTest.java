@@ -1,5 +1,7 @@
 package ntdjl;
 
+import java.io.IOException;
+
 import org.ejml.simple.SimpleMatrix;
 
 import ntdjl.utils.ActivationFunction;
@@ -8,9 +10,25 @@ import ntdjl.utils.Pair;
 public class MainTest {
 	
 	public static void main(String[] args) {
-		int[] n = {2, 600, 100, 1};
+		
+		String filepath = "C:/Users/maxime/Documents/model.ntdjl";
 		
 		NN model = new NN();
+		
+		try {
+			model.load(filepath);
+			System.out.println("Model loaded");
+			System.out.println("Prediction: " + model.predict(new SimpleMatrix(new double[][] {{235, 69}}).transpose()));
+			
+			return;
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		int[] n = {2, 600, 100, 1};
 		
 		model.addLayer(new Layer(n[0], n[1], ActivationFunction.SIGMOID));
 		model.addLayer(new Layer(n[1], n[2], ActivationFunction.SIGMOID));
@@ -77,6 +95,14 @@ public class MainTest {
 		
 		Pair out = model.feed_forward(testMat);
 		System.out.println("Final res: " + out.getA());
+		
+		
+		try {
+			model.save(filepath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

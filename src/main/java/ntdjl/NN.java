@@ -1,9 +1,16 @@
 package ntdjl;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import org.ejml.data.DMatrixRMaj;
 import org.ejml.simple.SimpleMatrix;
 
+import ntdjl.utils.ActivationFunction;
 import ntdjl.utils.Pair;
 
 public class NN {
@@ -102,5 +109,36 @@ public class NN {
 	    }
 
 	    return maxIndex;
+	}
+	
+	public void save(String filename) throws IOException {
+	    try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+	        out.writeInt(layers.size());
+	        for (Layer layer : layers) {
+	            out.writeObject(layer.activ); // enum
+	            out.writeObject(layer.weights.getDDRM());
+	            out.writeObject(layer.bias.getDDRM());
+	        }
+	    }
+	}
+	
+	public void load(String filename) throws IOException, ClassNotFoundException {
+	    layers.clear();
+
+	    try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+	        int numLayers = in.readInt();
+	        for (int i = 0; i < numLayers; i++) {
+	            ActivationFunction activ = (ActivationFunction) in.readObject();
+	            DMatrixRMaj weights = (DMatrixRMaj) in.readObject();
+	            DMatrixRMaj bias = (DMatrixRMaj) in.readObject();
+
+	            Layer layer = new Layer(0, 0, activ); // tailles dummy
+	            layer.weights = new SimpleMatrix(weights);
+	            layer.bias = new SimpleMatrix(bias);
+	            layer.activ = activ;
+
+	            layers.add(layer);
+	        }
+	    }
 	}
 }

@@ -1,12 +1,15 @@
 package ntdjl;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import org.ejml.simple.SimpleMatrix;
 
 import ntdjl.utils.ActivationFunction;
 
-public class Layer {
+public class Layer implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	SimpleMatrix weights;
 	SimpleMatrix bias;
