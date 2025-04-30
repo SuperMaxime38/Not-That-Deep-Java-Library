@@ -76,7 +76,31 @@ public class Layer implements Serializable {
 			break; // DEFAULT IS ALWAYS_ACTIVE
 		}
 	}
-	
+    
+    public Layer clone() {
+        Layer copy = new Layer(0, 0, this.activ); // tailles fictives pour init
+        copy.weights = this.weights.copy();
+        copy.bias = this.bias.copy();
+        copy.activ = this.activ; // enum, donc partagé sans souci
+        return copy;
+    }
+    
+    public void mutate(double rate) {
+        Random rand = new Random();
+
+        for (int i = 0; i < weights.getNumRows(); i++) {
+            for (int j = 0; j < weights.getNumCols(); j++) {
+                double mutation = rate * (rand.nextGaussian()); // bruit gaussien
+                weights.set(i, j, weights.get(i, j) + mutation);
+            }
+        }
+
+        for (int i = 0; i < bias.getNumRows(); i++) {
+            double mutation = rate * (rand.nextGaussian());
+            bias.set(i, 0, bias.get(i, 0) + mutation);
+        }
+    }
+
 	
 	public SimpleMatrix getWeights() {
 		return this.weights;

@@ -141,4 +141,19 @@ public class NN {
 	        }
 	    }
 	}
+	
+	public NN clone() {
+	    NN copy = new NN();
+	    for (Layer layer : this.layers) {
+	        copy.addLayer(layer.clone());
+	    }
+	    return copy;
+	}
+	
+	public void mutate(double rate) {
+	    for (Layer layer : layers) {
+	        layer.mutate(rate);
+	    }
+	}
+
 }
